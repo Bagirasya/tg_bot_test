@@ -22,7 +22,7 @@ def boo(message):
 
 
 @bot.message_handler(content_types=['text'])
-def boo(message):
+def boo_text(message):
     if message.chat.type == 'private':
         if message.text == "Agree":
             rand_nick = random_word.RandomWords().get_random_word()
@@ -51,12 +51,6 @@ def callback_inline(call):
         elif call.data == 'dog':
             dogs = open('adoggo.webp', 'rb')
             bot.send_photo(call.message.chat.id, dogs, 'A doggo')
-
-        # remove inline buttons
-        #bot.edit_message_text(chat_id=call.message.chat.id,message_id=call.message.message_id,text="",reply_markup=None)
-
-        #show alert
-        #bot.answer_callback_query(callback_query_id=call.message.chat.id,show_alert=True,text="The devil works hard, but we work harder")
 
     except Exception as e:
         print(repr(e))
