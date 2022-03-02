@@ -32,10 +32,43 @@ def boo(message):
                 bot.send_message(message.chat.id, "mirror")
         elif message.text == "Disagree":
             # inline keyboard
-            ...
-            bot.send_message(message.chat.id, "Okay")
+            markup = telebot.types.InlineKeyboardMarkup(row_width=2)
+            item1 = telebot.types.InlineKeyboardButton("Mew", callback_data='cat')
+            item2 = telebot.types.InlineKeyboardButton("Rawr", callback_data='dog')
+            markup.add(item1, item2)
+
+            bot.send_message(message.chat.id, "Okay", reply_markup=markup)
         else:
             bot.send_message(message.chat.id, "Badabee")
+
+
+@bot.callback_query_handler(func=lambda call: True)
+def callback_inline(call):
+    try:
+        if call.data == 'cat':
+            cats = open('kittens.webp', 'rb')
+            bot.send_photo(call.message.chat.id, cats, 'Kittens')
+        elif call.data == 'dog':
+            dogs = open('adoggo.webp', 'rb')
+            bot.send_photo(call.message.chat.id, dogs, 'A doggo')
+
+        # remove inline buttons
+        bot.edit_message_text(
+            chat_id=call.message.chat.id,
+            message_id=call.message.message_id,
+            text="",
+            reply_markup=None
+        )
+        #show alert
+        bot.answer_callback_query(
+            chat_id=call.message.chat.id,
+            show_alert=False,
+            text="The devil works hard, but we work harder"
+        )
+
+    except Exception as e:
+        print(repr(e))
+
 
 # RUN
 bot.polling(none_stop=True)
