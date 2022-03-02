@@ -18,8 +18,8 @@ def boo(message):
         message.chat.id,
         "Hi, {0.first_name}.\nTake a fortune cookie, buddy".format(message.from_user),
         parse_mode='html',
-        reply_markup=markup,
-    )
+        reply_markup=markup,)
+
 
 @bot.message_handler(content_types=['text'])
 def boo(message):
@@ -53,18 +53,10 @@ def callback_inline(call):
             bot.send_photo(call.message.chat.id, dogs, 'A doggo')
 
         # remove inline buttons
-        bot.edit_message_text(
-            chat_id=call.message.chat.id,
-            message_id=call.message.message_id,
-            text="",
-            reply_markup=None
-        )
+        #bot.edit_message_text(chat_id=call.message.chat.id,message_id=call.message.message_id,text="",reply_markup=None)
+
         #show alert
-        bot.answer_callback_query(
-            chat_id=call.message.chat.id,
-            show_alert=False,
-            text="The devil works hard, but we work harder"
-        )
+        #bot.answer_callback_query(callback_query_id=call.message.chat.id,show_alert=True,text="The devil works hard, but we work harder")
 
     except Exception as e:
         print(repr(e))
